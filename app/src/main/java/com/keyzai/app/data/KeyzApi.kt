@@ -57,7 +57,7 @@ class KeyzApi(
         return builder
     }
 
-    private fun buildRequest(path: String, method: String, bodyJson: String? = null): Request {
+    private fun buildRequest(path: String, method: String = "GET", bodyJson: String? = null): Request {
         val b = Request.Builder().url(BASE_URL + path)
         authed(b)
         val body = bodyJson?.toRequestBody(jsonMedia)
