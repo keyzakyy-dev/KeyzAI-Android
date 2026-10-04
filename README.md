@@ -65,7 +65,16 @@ lalu `gradle bundleRelease` (AAB).
 
 ## Catatan penting
 
-1. **Login Google di Android**: app meminta Google ID token dengan
+1. **Build di environment ini**: Gradle membutuhkan komunikasi TCP
+   Java↔Java di localhost (protokol daemon). Runtime Muse memblokirnya
+   secara default ("Direct network protocols → other_tcp: Deny").
+   Untuk build di sini, ubah di aplikasi Muse: **Settings → Permissions →
+   Direct network protocols → other_tcp: Deny → Ask**, lalu jalankan
+   build ulang. Alternatif: build di Android Studio atau via GitHub
+   Actions (workflow sudah disediakan di `.github/workflows/build.yml` —
+   push ke GitHub dan ambil APK dari Artifacts).
+
+2. **Login Google di Android**: app meminta Google ID token dengan
    audience = Web OAuth client ID KeyzAI
    (`227191802214-klcplrl89607it7obq9ne3ren73o9th9.apps.googleusercontent.com`),
    sehingga worker menerimanya tanpa perubahan. Jika Google melempar
@@ -74,8 +83,8 @@ lalu `gradle bundleRelease` (AAB).
    **Android** dengan package name `com.keyzai.app`.
    Ambil SHA-1 debug: `keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android`.
 
-2. **Backend**: base URL di `KeyzApi.BASE_URL`. Tidak ada endpoint baru
+3. **Backend**: base URL di `KeyzApi.BASE_URL`. Tidak ada endpoint baru
    yang dibutuhkan — semua sudah ada di worker.
 
-3. **Belum di-port** (bisa menyusul): PRD builder, grafik token,
+4. **Belum di-port** (bisa menyusul): PRD builder, grafik token,
    export/backup percakapan, pengumuman. Fokus v1 = chat inti.
