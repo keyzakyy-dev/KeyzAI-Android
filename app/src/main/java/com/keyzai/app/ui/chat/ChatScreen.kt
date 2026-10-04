@@ -119,7 +119,7 @@ class ChatViewModel(
         }
     }
 
-    fun setModel(id: String) {
+    fun selectModel(id: String) {
         model = id
         viewModelScope.launch { session.setModel(id) }
     }
@@ -289,7 +289,7 @@ fun ChatScreen(
                                         }
                                     },
                                     onClick = {
-                                        vm.setModel(m.id)
+                                        vm.selectModel(m.id)
                                         showModelMenu = false
                                     },
                                 )
